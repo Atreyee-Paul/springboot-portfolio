@@ -1,0 +1,132 @@
+{
+  "home": [
+    "Welcome — unlike Atreyee, you actually showed up on time.",
+    "I run the place... she pays the servers.",
+    "You’re on time. Atreyee? Not so much.",
+    "She promised punctuality once. Forgot again.",
+    "Here you are. She’s probably still in bed."
+  ],
+  "about": [
+    "This is Atreyee: brilliant, caffeinated, and mildly forgetful.",
+    "Fun fact: she once said 'I'll start tomorrow.' That was 2017.",
+    "Her coffee is stronger than her deadlines.",
+    "Brains and chaos, she brings both.",
+    "She codes… and occasionally remembers to eat."
+  ],
+  "skills": [
+    "She writes code… and then blames the computer.",
+    "Bug fixes are her cardio.",
+    "She commits, then regrets it instantly.",
+    "Syntax errors fear her… or maybe she fears them.",
+    "Her code runs… eventually, after a prayer."
+  ],
+  "skillsIncrease": {
+    "java": [
+      "You wish Atreyee knew more!",
+      "Ambitious... just like Atreyee!",
+      "Keep dreaming, that's her motto!",
+      "Not her day, clearly!",
+      "Nice try, but she failed again!"
+    ],
+    "python": [
+      "Indentation wars strike Atreyee again!",
+      "Python: She messed it up!",
+      "Snake bit her, obviously!",
+      "Syntax error incoming... her usual!",
+      "She shall not pass!"
+    ],
+    "c": [
+      "Pfft, Atreyee thinks she knows C.",
+      "Need more pointers, she said!",
+      "Segmentation fault, typical Atreyee.",
+      "Don't dereference her code!",
+      "Buffer overflow? Of course, Atreyee!"
+    ],
+    "ml": [
+      "Model says no. Atreyee agrees!",
+      "Next epoch? She’s asleep!",
+      "Not enough data... like her attention span.",
+      "Overfitting much? Typical Atreyee.",
+      "Her loss is high, literally!"
+    ],
+    "web": [
+      "HTML can’t save her now!",
+      "CSS to the rescue? She failed!",
+      "Javascript disagrees with Atreyee!",
+      "DOM says no, she listens.",
+      "Responsive? Not in her world!"
+    ]
+  },
+  "skillsDecrease": {
+    "java": [
+      "Too low! Atreyee lowered it herself.",
+      "Depressing... her code too!",
+      "Return to previous value? She won’t!",
+      "Don’t be shy... that’s her problem!",
+      "Who lowered it? She did!"
+    ],
+    "python": [
+      "Don’t hate on indentation. Atreyee did it.",
+      "Lower? Seriously, her code is worse!",
+      "Indent properly? She won’t!",
+      "Not allowed? Watch her try.",
+      "She broke the snake again!"
+    ],
+    "c": [
+      "Going down? Atreyee pushed it.",
+      "Escape pointers? She can’t!",
+      "Lower limit reached... her level!",
+      "Nope, try again? She won’t.",
+      "Memory leak detected... surprise!"
+    ],
+    "ml": [
+      "Lower? She sabotaged it.",
+      "Stay strong? Atreyee didn’t.",
+      "Gradient too small? Like her focus.",
+      "Accuracy too low? Check her model.",
+      "Loss function says no, she agrees!"
+    ],
+    "web": [
+      "Reducing? She already ruined it.",
+      "Can’t downgrade now, she did it!",
+      "Pixels are offended... at her.",
+      "CSS refuses... she didn’t listen.",
+      "JS is angry, naturally!"
+    ]
+  },
+  "projects": [
+    "She calls them projects… I call them procrastination logs.",
+    "So many ideas, so little completion.",
+    "Welcome to her digital graveyard of half-finished dreams.",
+    "Projects section: where ambition meets distraction.",
+    "She swears she’s working on them. I swear she’s not."
+  ],
+  "findCat": [
+    "You found me! Faster than Atreyee finding motivation.",
+    "Sneaky? She wished she were this fast.",
+    "Caught me! Atreyee can’t even catch bugs this fast.",
+    "Well done! She’s still searching for her code.",
+    "Quick! Atreyee would’ve taken hours."
+  ],
+  "contact": [
+    "Don't expect a fast reply — she's probably napping.",
+    "Message sent? She’ll answer… eventually.",
+    "Ping her if you want… maybe tomorrow.",
+    "She reads emails in her dreams.",
+    "Responses are slow… blame the caffeine shortage."
+  ],
+  "victory": [
+    "Hmph... you got lucky this time!",
+    "Fine, you win — don’t get cocky.",
+    "Congrats… must be the only productive thing you did today.",
+    "You actually found them all? Miracles happen.",
+    "Impressive… for once you clicked the right thing."
+  ],
+  "defeat": [
+    "Too slow! I could nap faster than you.",
+    "Missed some cats? Typical.",
+    "Try harder next time, rookie.",
+    "Pathetic… even my whiskers move faster.",
+    "Wow… you chase cats like a snail on vacation."
+  ]
+}

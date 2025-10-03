@@ -1,0 +1,33 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div th:fragment="contactSection">
+	  <section id="contact" class="section contact-section">
+	    <h1 class="contact-title">💬 Share Your Feedback!</h1>
+	    <p class="contact-subtitle">
+	      Got ideas, suggestions, or spicy roasts? I’d love to hear them! Drop your thoughts below or connect via socials.
+	    </p>
+
+	    <form action="https://formspree.io/f/xrbykkzp" method="POST" class="contact-form">
+	      <!-- Honeypot field for spam bots -->
+	      <input type="text" name="_gotcha" style="display:none">
+
+	      <!-- Optional redirect after submission -->
+	      <input type="hidden" name="_redirect" value="https://yourdomain.com/thank-you">
+
+	      <input type="text" name="name" placeholder="🧠 Your Name" required class="contact-input">
+	      <input type="email" name="email" placeholder="📬 Your Email (optional)" class="contact-input">
+	      <textarea name="feedback" placeholder="💡 Your Feedback" rows="5" required class="contact-input"></textarea>
+	      <button type="submit" class="contact-btn">🚀 Submit Feedback</button>
+	    </form>
+
+	    <div class="social-container">
+	      <h3 class="social-title">🌐 Find me here:</h3>
+	      <a href="https://github.com/Atreyee-Paul" target="_blank" class="social-link">🐱 GitHub</a>
+	      <a href="https://www.linkedin.com/in/atreyee-paul-264168253/" target="_blank" class="social-link">💼 LinkedIn</a>
+	      <a href="mailto:atreyeepaul1808@gmail.com" class="social-link">✉️ Email</a>
+	    </div>
+	  </section>
+	</div>
+</body>
+</html>
