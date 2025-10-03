@@ -17,4 +17,4 @@ RUN ./mvnw clean package -DskipTests
 EXPOSE 8080
 
 # Run the Spring Boot app
-CMD ["java", "-jar", "target/springboot-portfolio-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "target/MyPortfolioWebsite-0.0.1-SNAPSHOT.jar"]
