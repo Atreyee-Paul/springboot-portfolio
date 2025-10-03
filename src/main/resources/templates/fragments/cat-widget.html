@@ -1,0 +1,327 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div th:fragment="catWidget">
+
+	  <div id="cat-widget">
+	    <div class="cat-title">🐾 Cat Assistant</div>
+	    <div id="cat-message" class="cat-message">Loading sass...</div>
+	    <div id="cat-widget-lottie" style="width:180px; height:180px; margin-top:8px;"></div>
+
+	    <div id="cat-options">
+	      <button id="chat-btn">💬 Chat</button>
+	      <button id="play-btn">🎮 Play</button>
+	    </div>
+	  </div>
+
+	  <div id="floating-cat-game" style="position:fixed; width:100px; height:100px; display:none; z-index:9999; cursor:pointer;"></div>
+
+	  <style>
+	      body.dark-theme #cat-widget-lottie {
+	        filter: drop-shadow(0 0 12px #ff00ff) drop-shadow(0 0 24px #00ffff);
+	        transition: filter 0.3s ease-in-out;
+	      }
+	      body.dark-theme #cat-widget:hover #cat-widget-lottie {
+	        filter: drop-shadow(0 0 16px #ff33cc) drop-shadow(0 0 32px #33ffcc);
+	      }
+	    </style>
+			  
+<!-- Lottie and Confetti -->
+  <script src="https://unpkg.com/lottie-web@5.7.6/build/player/lottie.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    // === Variables ===
+    let dialogues = {};
+    let currentSection = "home";
+    let gamePromptActive = false;
+    let gameActive = false;
+    let gameRounds = 10;
+    let currentRound = 0;
+    let score = 0;
+
+    const catWidget = document.getElementById("cat-widget");
+    const catGame = document.getElementById("floating-cat-game");
+    const catWidgetLottieContainer = document.getElementById("cat-widget-lottie");
+    let widgetAnim = null;
+
+    // === Fetch dialogues ===
+    fetch("/data/dialogues.json")
+      .then(res => res.json())
+      .then(data => {
+        dialogues = data;
+        updateMessage("home");
+      });
+
+    // === Widget animation ===
+    widgetAnim = lottie.loadAnimation({
+      container: catWidgetLottieContainer,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: '/lottie/dancing-cat.json'
+    });
+
+    // === Helpers ===
+    function setCatMessage(msg) {
+      document.getElementById("cat-message").innerText = msg;
+    }
+
+    function updateMessage(section) {
+      if (dialogues[section]) {
+        const msgs = dialogues[section];
+        const msg = msgs[Math.floor(Math.random() * msgs.length)];
+        setCatMessage(msg);
+      }
+    }
+
+    // === Scroll-based updates ===
+    window.addEventListener("scroll", () => {
+      if (gameActive) return;
+      const sections = document.querySelectorAll("section");
+      let found = currentSection;
+      sections.forEach(sec => {
+        const rect = sec.getBoundingClientRect();
+        if (rect.top <= window.innerHeight/2 && rect.bottom >= window.innerHeight/2) {
+          found = sec.getAttribute("id");
+        }
+      });
+      if (found !== currentSection) {
+        currentSection = found;
+        updateMessage(currentSection);
+      }
+    });
+
+    // === Game start ===
+    function startGame() {
+      catWidget.style.display = "none";
+      gameActive = true;
+      currentRound = 0;
+      score = 0;
+      nextRound();
+    }
+
+    // === Game rounds ===
+	function nextRound() {
+	  if (currentRound >= gameRounds) {
+	    endGame();
+	    return;
+	  }
+
+	  catGame.style.display = "block";
+	  catGame.innerHTML = "";
+
+	  const size = 60 + Math.random() * 60;
+	  const x = Math.random() * (window.innerWidth - size);
+	  const y = Math.random() * (window.innerHeight - size);
+	  catGame.style.width = size + "px";
+	  catGame.style.height = size + "px";
+	  catGame.style.left = x + "px";
+	  catGame.style.top = y + "px";
+
+	  // Normal game animation
+	  const anim = lottie.loadAnimation({
+	    container: catGame,
+	    renderer: 'svg',
+	    loop: true,
+	    autoplay: true,
+	    path: '/lottie/game.json'
+	  });
+
+	  let roundEnded = false;
+
+	  const endRound = (clicked) => {
+	    if (roundEnded) return;
+	    roundEnded = true;
+
+	    if (clicked) {
+	      catGame.innerHTML = "";
+	      lottie.loadAnimation({
+	        container: catGame,
+	        renderer: 'svg',
+	        loop: false,
+	        autoplay: true,
+	        path: '/lottie/clicked.json'
+	      });
+	      score++;
+	    }
+
+	    currentRound++;
+
+	    setTimeout(() => {
+	      nextRound();
+	    }, clicked ? 2000 : 0); // show clicked.json for 1s if clicked
+	  };
+
+	  // Click handler
+	  const handleClick = () => endRound(true);
+	  catGame.addEventListener("click", handleClick);
+
+	  // Auto end round after 2.5s if not clicked
+	  setTimeout(() => endRound(false), 2500);
+	}
+
+	// === End game ===
+	function endGame() {
+	  gameActive = false;
+	  catGame.style.display = "none";
+	  catWidget.style.display = "block";
+
+	  let message = "";
+	  if (score === gameRounds) {
+	    launchConfetti();
+	    if (dialogues["victory"]) {
+	      const msgs = dialogues["victory"];
+	      message = msgs[Math.floor(Math.random() * msgs.length)];
+	    } else {
+	      message = "🎉 You actually won… shocking!";
+	    }
+	  } else {
+	    if (dialogues["defeat"]) {
+	      const msgs = dialogues["defeat"];
+	      message = msgs[Math.floor(Math.random() * msgs.length)];
+	      message = ` Only ${score} out of ${gameRounds}? ` + message; // roast tone
+	    } else {
+	      message = `😼 Pathetic… even my whiskers could’ve done better. Only ${score} out of ${gameRounds}?`;
+	    }
+	  }
+
+	  // Show result roast for 8 seconds
+	  setCatMessage(message);
+	  setTimeout(() => {
+	    updateMessage(currentSection);
+	  }, 8000);
+	}
+
+    // === Confetti ===
+    function launchConfetti() {
+      const duration = 5000;
+      const end = Date.now() + duration;
+      (function frame() {
+        confetti({
+          particleCount: 5 + Math.random() * 5,
+          angle: Math.random() * 60 + 60,
+          spread: 55,
+          origin: { x: Math.random(), y: Math.random() - 0.2 },
+          colors: ['#000', '#555', '#aaa']
+        });
+        if (Date.now() < end) requestAnimationFrame(frame);
+      })();
+    }
+
+	// === Widget click behavior ===
+	catWidget.addEventListener("click", () => {
+	  if (gameActive) return; // ignore clicks during game
+
+	  const options = document.getElementById("cat-options");
+	  if (options.style.display === "none") {
+	    // Reveal options
+	    options.style.display = "flex";
+	    setCatMessage("😼 Choose: chat or play?");
+	  } else {
+	    // Hide options if clicked again
+	    options.style.display = "none";
+	    updateMessage(currentSection);
+	  }
+	});
+
+	// === Options button handlers ===
+	document.getElementById("chat-btn").addEventListener("click", (e) => {
+	  e.stopPropagation();
+	  document.getElementById("cat-options").style.display = "none";
+	  openChat();  // open the chatbot side panel
+	});
+
+	document.getElementById("play-btn").addEventListener("click", (e) => {
+	  e.stopPropagation();
+	  document.getElementById("cat-options").style.display = "none";
+	  startGame();
+	});
+
+	// --- DRAGGABLE WIDGET (Desktop + Mobile) ---
+	let isDragging = false;
+	let dragOffsetX = 0;
+	let dragOffsetY = 0;
+
+	// Initialize position at bottom-right
+	function setInitialPosition() {
+	  const padding = 20;
+	  catWidget.style.left = (window.innerWidth - catWidget.offsetWidth - padding) + "px";
+	  catWidget.style.top = (window.innerHeight - catWidget.offsetHeight - padding) + "px";
+	}
+	setInitialPosition();
+
+	// --- Desktop Drag ---
+	catWidget.addEventListener("mousedown", function(e) {
+	  if (e.target.closest("button")) return; // avoid buttons
+	  isDragging = true;
+	  dragOffsetX = e.clientX - catWidget.getBoundingClientRect().left;
+	  dragOffsetY = e.clientY - catWidget.getBoundingClientRect().top;
+	  catWidget.style.cursor = "grabbing";
+	  e.preventDefault();
+	});
+
+	document.addEventListener("mousemove", function(e) {
+	  if (!isDragging) return;
+
+	  let x = e.clientX - dragOffsetX;
+	  let y = e.clientY - dragOffsetY;
+
+	  // Keep inside viewport
+	  const maxX = window.innerWidth - catWidget.offsetWidth;
+	  const maxY = window.innerHeight - catWidget.offsetHeight;
+	  x = Math.max(0, Math.min(x, maxX));
+	  y = Math.max(0, Math.min(y, maxY));
+
+	  catWidget.style.left = x + "px";
+	  catWidget.style.top = y + "px";
+	  catWidget.style.right = "auto";
+	  catWidget.style.bottom = "auto";
+	});
+
+	document.addEventListener("mouseup", function() {
+	  if (isDragging) {
+	    isDragging = false;
+	    catWidget.style.cursor = "grab";
+	  }
+	});
+
+	// --- Mobile Touch Support ---
+	catWidget.addEventListener("touchstart", function(e) {
+	  if (e.target.closest("button")) return;
+	  isDragging = true;
+	  const touch = e.touches[0];
+	  dragOffsetX = touch.clientX - catWidget.getBoundingClientRect().left;
+	  dragOffsetY = touch.clientY - catWidget.getBoundingClientRect().top;
+	});
+
+	catWidget.addEventListener("touchmove", function(e) {
+	  if (!isDragging) return;
+	  const touch = e.touches[0];
+
+	  let x = touch.clientX - dragOffsetX;
+	  let y = touch.clientY - dragOffsetY;
+
+	  const maxX = window.innerWidth - catWidget.offsetWidth;
+	  const maxY = window.innerHeight - catWidget.offsetHeight;
+	  x = Math.max(0, Math.min(x, maxX));
+	  y = Math.max(0, Math.min(y, maxY));
+
+	  catWidget.style.left = x + "px";
+	  catWidget.style.top = y + "px";
+	  catWidget.style.right = "auto";
+	  catWidget.style.bottom = "auto";
+
+	  e.preventDefault(); // prevent scrolling while dragging
+	}, { passive: false });
+
+	catWidget.addEventListener("touchend", function() {
+	  isDragging = false;
+	});
+
+	// --- Optional: Reset on window resize ---
+	window.addEventListener("resize", setInitialPosition);
+  </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+[
+	{
+	    "title": "My Portfolio Website",
+	    "description": "A Portfolio Website to showcase for my projects.",
+	    "highlights": [
+	      "Added a Midnight Mode (dark/light toggle) for comfortable viewing at all hours.",
+	      "Engineered the Floating Project Carousel for a slick, museum-like browsing experience.",
+	      "Polished all styles for a unified, vibrant, and fun aesthetic."
+	    ],
+	    "footer": "Built with pure HTML, CSS magic.",
+	    "image": {
+	        "light": "images/portfolio-light.png",
+	        "dark": "images/portfolio-dark.png"
+	    },
+	    "status": "completed",
+	    "link": "https://your-live-website-url.com",
+	    "modal": {
+	      "tools": [
+	        "HTML5",
+	        "CSS3 (Sass)",
+	        "Vanilla JavaScript",
+	        "Thymeleaf (for templating)"
+	      ],
+	      "notes": "The redesign is complete! It was a blast focusing on making the site feel alive and easy to navigate. The code is clean, the colors pop, and the user experience is smooth as butter."
+	    }
+	},
+  {
+    "title": "🎬 Movie Recommendation System",
+    "description": "Content-based system recommending movies using genres, cast, and keywords.",
+    "highlights": [
+      "TF-IDF Vectorization",
+      "Content-based filtering",
+      "Fuzzy matching for input"
+    ],
+    "footer": "Python & Cosine Similarity",	
+	"image": {
+	    "light": "images/movie1_light.png",
+	    "dark": "images/movie1_dark.png"
+		},
+    "status": "completed",
+	"link": "https://github.com/Atreyee-Paul/Machine-Learning/blob/main/Project6_Movie_Recommendation_System.ipynb"
+  },
+  {
+    "title": "🛍️ Customer Segmentation",
+    "description": "Unsupervised clustering to segment customers and predict their purchasing behavior.",
+    "highlights": [
+      "K-Means Clustering",
+      "Random Forest prediction",
+      "Seaborn data visualization"
+    ],
+    "footer": "K-Means & RandomForest",
+	"image": {
+		    "light": "images/customer1_light.png",
+		    "dark": "images/customer1_dark.png"
+			},
+    "status": "completed"			,
+	"link": "https://github.com/Atreyee-Paul/Machine-Learning/blob/main/Project5_Customer_Segmentation_and_Purchase_Prediction.ipynb"
+  }
+]

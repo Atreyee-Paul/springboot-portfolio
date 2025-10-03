@@ -1,0 +1,32 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+  <div th:fragment="aboutSection">
+    <section id="about" class="section about-section">
+      <!-- Left: Profile Image -->
+	  <div class="about-pic">
+	    <!-- Light Theme Image -->
+	    <img th:src="@{/images/profile-light.jpeg}" alt="Profile Picture" class="profile-img light-img">
+
+	    <!-- Dark Theme Image -->
+	    <img th:src="@{/images/profile-dark.jpeg}" alt="Profile Picture" class="profile-img dark-img">
+	  </div>
+
+      <!-- Right: About Text -->
+      <div class="about-texts">
+        <h2 class="about-title">About Me</h2>
+        <p class="about-description">
+          Hi there! I’m a curious and creative Computer Science student who loves exploring the
+          world of programming and technology.  
+          From building machine learning models to developing full-stack applications, I enjoy
+          turning ideas into fun and meaningful solutions.  
+          I approach every challenge like a playful cat — curious, persistent, and always ready to
+          learn something new. 🐾  
+          Outside of code, I enjoy experimenting with new concepts, discovering music, and
+          adding a little creativity to everything I do.  
+        </p>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

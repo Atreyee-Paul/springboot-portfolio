@@ -1,0 +1,135 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+  <div th:fragment="skillsSection">
+    <section id="skills" class="section skills-section">
+      <!-- Left: Interactive Skill Bars -->
+      <div class="skills-bars">
+        <h2 class="skills-title">Skills</h2>
+        <div>
+          <p>Core Java – 80%</p>
+          <input type="range" min="0" max="100" value="80" class="skill-bar" id="java-bar">
+        </div>
+        <div>
+          <p>Python – 60%</p>
+          <input type="range" min="0" max="100" value="60" class="skill-bar" id="python-bar">
+        </div>
+        <div>
+          <p>C – 70%</p>
+          <input type="range" min="0" max="100" value="70" class="skill-bar" id="c-bar">
+        </div>
+        <div>
+          <p>Machine Learning – 80%</p>
+          <input type="range" min="0" max="100" value="80" class="skill-bar" id="ml-bar">
+        </div>
+        <div>
+          <p>Web Development – 50%</p>
+          <input type="range" min="0" max="100" value="50" class="skill-bar" id="web-bar">
+        </div>
+      </div>
+
+      <!-- Right: Tech Collage/Image -->
+	  <div class="skills-image">
+	          <img id="skills-img"
+	               th:src="@{/images/img.png}"
+	               th:attr="data-light=@{/images/img.png}, data-dark=@{/images/skills-dark.png}"
+	               alt="Tech Collage">
+	  </div>
+    </section>
+
+    <!-- Skill Message Box -->
+    <div id="skill-message" class="skill-message"></div>
+
+    <!-- JS remains unchanged -->
+    <script>
+		// --- image switching ---
+		      document.addEventListener("DOMContentLoaded", () => {
+		        const skillsImg = document.getElementById("skills-img");
+		        if (!skillsImg) return;
+
+		        const lightSrc = skillsImg.dataset.light;
+		        const darkSrc  = skillsImg.dataset.dark;
+
+		        function updateSkillsImg() {
+		          if (document.body.classList.contains("dark-theme")) {
+		            skillsImg.src = darkSrc;
+		          } else {
+		            skillsImg.src = lightSrc;
+		          }
+		        }
+
+		        // set on load
+		        updateSkillsImg();
+
+		        // watch body class changes
+		        const observer = new MutationObserver(() => updateSkillsImg());
+		        observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+		      });
+			  
+      fetch('/data/dialogues.json')
+        .then(response => response.json())
+        .then(data => {
+          const increaseMsgs = data.skillsIncrease;
+          const decreaseMsgs = data.skillsDecrease;
+
+          const bars = [
+            {id: 'java-bar', value: 80},
+            {id: 'python-bar', value: 60},
+            {id: 'c-bar', value: 70},
+            {id: 'ml-bar', value: 80},
+            {id: 'web-bar', value: 50}
+          ];
+
+          function updateRangeFill(input) {
+            input.style.background = `linear-gradient(to right, #000 ${input.value}%, #fff ${input.value}%)`;
+          }
+
+          bars.forEach(bar => {
+            const input = document.getElementById(bar.id);
+            updateRangeFill(input);
+
+            input.addEventListener('input', () => updateRangeFill(input));
+
+            input.addEventListener('change', () => {
+              const messageBox = document.getElementById('skill-message');
+              let skillKey = bar.id.split('-')[0];
+              let msg = '';
+
+              if(input.value > bar.value){
+                const messages = increaseMsgs[skillKey];
+                msg = messages[Math.floor(Math.random() * messages.length)];
+              } else if(input.value < bar.value){
+                const messages = decreaseMsgs[skillKey];
+                msg = messages[Math.floor(Math.random() * messages.length)];
+              }
+
+              if(msg){
+                messageBox.innerText = msg;
+                messageBox.style.display = 'block';
+                messageBox.style.opacity = '1';
+
+                setTimeout(() => {
+                  const start = parseInt(input.value);
+                  const end = bar.value;
+                  const steps = 20;
+                  let count = 0;
+                  const diff = end - start;
+                  const interval = setInterval(() => {
+                    count++;
+                    input.value = start + (diff * count / steps);
+                    updateRangeFill(input);
+                    if(count >= steps) clearInterval(interval);
+                  }, 20);
+
+                  messageBox.style.opacity = '0';
+                  setTimeout(() => { messageBox.style.display = 'none'; }, 500);
+                }, 1500);
+              }
+            });
+          });
+        })
+        .catch(err => console.error('Failed to load dialogues.json', err));
+    </script>
+  </div>
+</body>
+</html>
