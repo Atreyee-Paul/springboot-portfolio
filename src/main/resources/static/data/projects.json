@@ -50,8 +50,8 @@
     ],
     "footer": "K-Means & RandomForest",
 	"image": {
-		    "light": "images/customer1_light.png",
-		    "dark": "images/customer1_dark.png"
+		    "light": "images/Customer1_light.png",
+		    "dark": "images/Customer1_dark.png"
 			},
     "status": "completed"			,
 	"link": "https://github.com/Atreyee-Paul/Machine-Learning/blob/main/Project5_Customer_Segmentation_and_Purchase_Prediction.ipynb"
