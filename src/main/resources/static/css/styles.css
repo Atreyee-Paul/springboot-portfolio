@@ -396,10 +396,11 @@ body {
      font-family: 'Press Start 2P', monospace;
      background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
      transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+	 flex-wrap: wrap;
    }
 
    .about-pic {
-     flex: 1;
+     flex: 1 1 45%;
      display: flex;
      justify-content: center;
      align-items: center;
@@ -415,13 +416,14 @@ body {
    }
 
    .about-texts {
-     flex: 1;
+     flex: 1 1 45%; 
      display: flex;
      flex-direction: column;
      justify-content: center;
      align-items: center;
      text-align: center;
      color: #000;
+	 padding-left: 20px;
    }
 
    .about-title {
@@ -452,7 +454,7 @@ body {
      .about-texts {
        width: 100%;
        height: auto;
-       margin-bottom: 20px;
+       margin-bottom: 40px;
      }
 
      .about-pic img {
