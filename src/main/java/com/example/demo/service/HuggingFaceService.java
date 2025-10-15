@@ -28,6 +28,7 @@ public class HuggingFaceService {
 
         String rawResponse = webClient.post()
                 .uri("https://Atreyee2004-cat-chatbot.hf.space/chat")
+                .header("Authorization", "Bearer " + apiToken)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(String.class)
